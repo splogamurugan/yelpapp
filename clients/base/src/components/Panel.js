@@ -2,6 +2,9 @@ import React, {Component} from 'react'
 
 import Business from './Business'
 
+import fetchData from '../lib/Fetch'
+
+
 class Panel extends Component{
 
     state = {
@@ -9,13 +12,19 @@ class Panel extends Component{
             {
                 "id": "55555",
                 "name": "Tommy",
-                "address1": "Tommy one st",
-                "city": "SF",
                 "author": "Bred",
-                "comment": "An awesome shop"
-
+                "comment": "An awesome shop",
+                "location": {
+                    "address1": "an address",
+                    "city": "SF"
+                },
+                "review": {
+                    "name": "Sam",
+                    "text": "A great shop"
+                }
             }
-        ]
+        ],
+        "isLoading": true
     }
 
     render = () => {
@@ -30,6 +39,19 @@ class Panel extends Component{
             </div>
         )
     }
+
+
+    componentDidMount = () => {
+        //this.setLoadingHandler(true)
+        this.fetch()
+    }
+
+    fetch() {
+        fetchData.business(
+            data => {this.setState({businesses: data.businesses, isLoading: false})}
+        )
+    }
+
 
 }
 

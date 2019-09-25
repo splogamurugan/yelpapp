@@ -1,15 +1,10 @@
-const API_URL = 'http://localhost:3001/';
-
 
 class Fetch {
 
-    constructor(url) {
-        this.url = url;
-    }
 
     business(cb) {
 
-        fetch(this.url+ '/', {headers: {
+        fetch('/business', {headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           }}
@@ -21,7 +16,7 @@ class Fetch {
 
     review(id, cb) {
 
-        fetch(this.url+ '/reviews/'+id, {headers: {
+        fetch('/reviews/'+id, {headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           }}
@@ -34,4 +29,4 @@ class Fetch {
 
 }
 
-export default new Fetch(API_URL)
+export default new Fetch()
