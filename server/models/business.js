@@ -1,87 +1,34 @@
+const data = require('../lib/Yelp');
 
-const business = {
-    "total": 8228,
-    "businesses": [
+exports.search = (cb) => {
+  data.get(
+      'search', 
       {
-        "rating": 4,
-        "price": "$",
-        "phone": "+14152520800",
-        "id": "E8RJkjfdcwgtyoPMjQ_Olg",
-        "alias": "four-barrel-coffee-san-francisco",
-        "is_closed": false,
-        "categories": [
-          {
-            "alias": "coffee",
-            "title": "Coffee & Tea"
-          }
-        ],
-        "review_count": 1738,
-        "name": "Four Barrel Coffee",
-        "url": "https://www.yelp.com/biz/four-barrel-coffee-san-francisco",
-        "coordinates": {
-          "latitude": 37.7670169511878,
-          "longitude": -122.42184275
-        },
-        "image_url": "http://s3-media2.fl.yelpcdn.com/bphoto/MmgtASP3l_t4tPCL1iAsCg/o.jpg",
-        "location": {
-          "city": "San Francisco",
-          "country": "US",
-          "address2": "",
-          "address3": "",
-          "state": "CA",
-          "address1": "375 Valencia St",
-          "zip_code": "94103"
-        },
-        "distance": 1604.23,
-        "transactions": ["pickup", "delivery"]
+          "term": "Ice cream",
+          "location": "NYC"
       },
-
-
-      {
-        "rating": 2,
-        "price": "$",
-        "phone": "+14152520800",
-        "id": "E8RJkjfdcwgtyoPMjQ_Olf",
-        "alias": "four-barrel-coffee-san-francisco",
-        "is_closed": false,
-        "categories": [
-          {
-            "alias": "coffee",
-            "title": "Coffee & Tea"
+      (data) => {
+          if (data.businesses && Array.isArray(data.businesses)) {
+              cb({"records": data.businesses.slice(0, 5)})
+          } else {
+              cb({"error": "An internal server error occured"})
           }
-        ],
-        "review_count": 1738,
-        "name": "Four Barrel Icecream",
-        "url": "https://www.yelp.com/biz/four-barrel-coffee-san-francisco",
-        "coordinates": {
-          "latitude": 37.7670169511878,
-          "longitude": -122.42184275
-        },
-        "image_url": "http://s3-media2.fl.yelpcdn.com/bphoto/MmgtASP3l_t4tPCL1iAsCg/o.jpg",
-        "location": {
-          "city": "San Francisco",
-          "country": "US",
-          "address2": "",
-          "address3": "",
-          "state": "CA",
-          "address1": "375 Valencia St",
-          "zip_code": "94103"
-        },
-        "distance": 1604.23,
-        "transactions": ["pickup", "delivery"]
       }
-
-      
-    ],
-    "region": {
-      "center": {
-        "latitude": 37.767413217936834,
-        "longitude": -122.42820739746094
-      }
-    }
-  }
-
-exports.list = () => {
-    return business;
+  );
 }
 
+exports.review = (id, cb) => {
+  let endpoint = `${id}/reviews`;
+  data.get(
+      endpoint, 
+      {},
+      (data) => {
+          console.log(data)
+          if (data.reviews && Array.isArray(data.reviews)) {
+              cb({"user": data.reviews[0].user, "text": data.reviews[0].text})
+          } else {
+              cb({"error": "An internal server error occured"})
+          }
+      }
+  );
+}
