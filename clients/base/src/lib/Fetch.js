@@ -16,7 +16,7 @@ class Fetch {
 
     review(id, cb) {
 
-        fetch('/reviews/'+id, {headers: {
+        fetch('businesses/'+id+'/reviews/', {headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           }}

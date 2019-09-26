@@ -7,8 +7,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Panel />
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-10">
+            <Panel />
+          </div>
+        </div>
       </div>
     );
   }
