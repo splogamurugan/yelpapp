@@ -48,7 +48,7 @@ class Panel extends Component{
 
     fetch() {
         fetchData.business(
-            data => {this.setState({businesses: data.businesses, isLoading: false})}
+            data => {this.setState({businesses: data.records, isLoading: false})}
         )
     }
 

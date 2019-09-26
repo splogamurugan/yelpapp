@@ -4,7 +4,7 @@ class Fetch {
 
     business(cb) {
 
-        fetch('/business', {headers: {
+        fetch('/businesses', {headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           }}

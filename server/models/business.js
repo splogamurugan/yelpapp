@@ -5,7 +5,7 @@ exports.search = (cb) => {
       'search', 
       {
           "term": "Ice cream",
-          "location": "NYC"
+          "location": "Alpharetta"
       },
       (data) => {
           if (data.businesses && Array.isArray(data.businesses)) {
