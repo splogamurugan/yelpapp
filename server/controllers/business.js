@@ -4,14 +4,30 @@ const yelpConfig = require('../configs/yelp')
 const Yelp = require('../lib/data/Yelp')
 const dataStream = new Yelp(yelpConfig.BASE_URL, yelpConfig.API_KEY);
 
-exports.search = (req, resp) => {
-    model.search(dataStream, config, (res) => {
-        resp.send(res)
-    });
+exports.search = async (req, resp) => {
+    try {
+        const res = await model.search(dataStream, config);
+        resp.send(res);
+    } catch (ex) {
+        resp.send(ex);
+    }
+
 }
 
-exports.review = (req, resp) => {
-    model.review(dataStream, req.params.id, (res) => {
-        resp.send(res)
-    });
+exports.review = async (req, resp) => {
+    try {
+        const res = await model.review(dataStream, req.params.id);
+        resp.send(res);
+    } catch (ex) {
+        resp.send(ex);
+    }
+}
+
+exports.searchWithReviews = async (req, resp) => {
+    try {
+        const res = await model.searchWithReviews(dataStream, config);
+        resp.send(res);
+    } catch (ex) {
+        resp.send(ex);
+    }
 }

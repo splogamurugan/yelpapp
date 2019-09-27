@@ -90,14 +90,22 @@ class Dummy {
       return this.payload.businesses_data;
     }
 
-    get(endpoint, params, cb) {
-        let result;
-        if (endpoint == 'search') {
-            result = this.businesses_data
-        } else {
-            result = this.reviews_data
-        }
-        cb(result)
+    async get(endpoint, params) {
+      return new Promise(async (resolve, reject) => {
+          let result;
+          if (endpoint == 'search') {
+              result = this.businesses_data
+          } else {
+              result = this.reviews_data
+          }
+
+          if ("error" in result) {
+              reject(result)
+          } else {
+              resolve(result)
+          }
+
+      })
     }
 }
   

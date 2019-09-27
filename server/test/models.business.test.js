@@ -4,43 +4,47 @@ const expect  = require('chai').expect;
 const Data = require('../lib/data/Dummy');
 
 
-it('Business model returns error on bad response', (done) => {
+it('Business model returns error on bad response', async () => {
     let data = new Data()
     data.businesses_data = {"error": "an error occured"}
-    model.search(data, config, (res) => {
+    try {
+        await  model.search(data, config);
+    } catch(res) {
         expect('error' in res).equals(true)
-        done();
-    });
+    }
+
 });
 
 
-it('Business model returns result on valid response', (done) => {
+it('Business model returns result on valid response', async () => {
     let data = new Data()
     config.API_RESULT_COUNT = 10;
-    model.search(data, config, (res) => {
-        expect('error' in res).equals(false)
-        expect('records' in res).equals(true)
-        expect(res.records.length).equals(config.API_RESULT_COUNT)
-        done();
-    });
+    let res = await model.search(data, config);
+    expect('error' in res).equals(false)
+    expect('records' in res).equals(true)
+    expect(res.records.length).equals(config.API_RESULT_COUNT)
+    
+    
 });
 
 
-it('Review model returns error on bad response', (done) => {
+it('Review model returns error on bad response', async () => {
     let data = new Data()
-    data.reviews_data = "";
-    model.review(data, config, (res) => {
-        expect('error' in res).equals(true)
-        done();
-    });
+    data.reviews_data = {"error": "some error to trigger"};
+    try {
+        await model.review(data, config);
+    } catch (ex) {
+        expect('error' in ex).equals(true)
+    }
+
 });
 
-it('Review model returns result on valid response', (done) => {
+it('Review model returns result on valid response', async () => {
     let data = new Data()
-    model.review(data, config, (res) => {
-        expect('error' in res).equals(false)
-        done();
-    });
+    
+    res = await model.review(data, config);
+    expect('error' in res).equals(false)
+
 });
 
 

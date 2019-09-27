@@ -16,14 +16,14 @@ class Business extends Component {
         const reviewerData = this.state.reviewer
         let reviewer = <p>Loading review...</p>;
         if (reviewerData.user) {
-            reviewer = <Review user={reviewerData.user} username={reviewerData.user.name} text={reviewerData.text} />
+            reviewer = <Review user={reviewerData.user} text={reviewerData.text} />
         } else if (reviewerData.error) {
             reviewer = <p>No Reviews found</p>;
         }
 
         return (
 
-            <div className="card mt-1">
+            <div className="card mb-3">
                 <div className="row no-gutters">
 
                     <div className="col-2">
