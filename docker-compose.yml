@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+
+  yelp_server:
+    build: ./server
+    image: yelp_server
+    container_name: yelp_server
+    command: node app.js
+    environment: 
+      - API_KEY=${API_KEY}
+    volumes:
+      - ./server:/usr/src/app
+
+  yelp_frontend:
+    build: ./clients/base
+    image: yelp_frontend
+    container_name: yelp_frontend
+    links:
+     - yelp_server
+    volumes:
+      - ./clients/base/public:/usr/src/app/public
+      - ./clients/base/src:/usr/src/app/src
+    ports:
+      - '3000:3000'
+    command: npm start
+    depends_on:
+      - yelp_server
