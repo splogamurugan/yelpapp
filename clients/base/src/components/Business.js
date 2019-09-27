@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 
 import Review from './Review'
 import fetchData from '../lib/Fetch'
@@ -7,7 +7,6 @@ import fetchData from '../lib/Fetch'
 class Business extends Component {
 
     state = {
-        "isLoading": true,
         "reviewer": {}
     }
 
@@ -17,23 +16,30 @@ class Business extends Component {
         const reviewerData = this.state.reviewer
         let reviewer = <p>Loading review...</p>;
         if (reviewerData.user) {
-            reviewer = <Review username={reviewerData.user.name} text={reviewerData.text} />
+            reviewer = <Review user={reviewerData.user} username={reviewerData.user.name} text={reviewerData.text} />
+        } else if (reviewerData.error) {
+            reviewer = <p>No Reviews found</p>;
         }
 
         return (
 
-            <div className="card">
+            <div className="card mt-1">
                 <div className="row no-gutters">
-                
+
                     <div className="col-2">
                         <img src={this.props.record.image_url} className="img-fluid" alt="..." />
                     </div>
 
                     <div className="col">
-                        <div class="card-block px-2">
-                            <h5 className="card-title">{this.props.record.name}</h5>
-                            <p className="card-text">{this.props.record.location.address1}, {this.props.record.location.city}</p>
+                        <div className="card-block px-2">
+                            <address className="mt-3 text-secondary">
+                                <strong className="card-title">{this.props.record.name}</strong>
+                                <div className="float-right"><small>{this.props.record.location.address1}, {this.props.record.location.city}</small></div>
+                            </address>
+                            <hr />
+                            <div className="pb-3">
                             {reviewer}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -50,7 +56,7 @@ class Business extends Component {
             id,
             data => {
                 console.log(data)
-                this.setState({reviewer: data, isLoading: false})
+                this.setState({ reviewer: data})
             }
         )
     }

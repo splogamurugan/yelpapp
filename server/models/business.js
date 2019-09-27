@@ -13,7 +13,7 @@ exports.search = (data, config, cb) => {
           if (doesConsist(res, 'businesses')) {
               cb({"records": res.businesses.slice(0, config.API_RESULT_COUNT)})
           } else {
-              cb({"error": "An internal server error occured while fetching shops!"})
+              cb({"error": "An internal server error occured while fetching shops!", "records":[]})
           }
       }
   );

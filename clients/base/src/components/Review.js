@@ -9,7 +9,7 @@ class Review extends Component {
 
     render = () => {
         return(
-            <p className="card-text">{this.props.username}: <small className="text-muted">{this.props.text}</small></p>
+            <p className="card-text"><small className="text-muted"><i>{this.props.text}</i></small> <a href={this.props.user.profile_url} target="_blank">{this.props.username}</a></p>
         )
     }
     
