@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
-const port = 3001
+const config = require('./configs/site')
+const port = config.PORT
 
 const ctrl = require('./controllers/business.js');
 
