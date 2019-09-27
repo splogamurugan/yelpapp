@@ -3,6 +3,7 @@ const axios = require("axios");
 const baseUrl = 'http://localhost:3001';
 
 it('Business API returns records', function(done) {
+    this.timeout(10000);
 
     axios.get(baseUrl+'/businesses')
     .then(function (response) {
@@ -37,6 +38,7 @@ it('Invalid Request failed with status code 404', function(done) {
 
 
 it('Business review api gives one result', function(done) {
+    this.timeout(10000);
 
     axios.get(baseUrl+'/businesses/oDTdXsjMJ-Xzs-rsn96_4Q/reviews/')
     .then(function (response) {

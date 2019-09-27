@@ -1,6 +1,8 @@
 const model = require('../models/business.js');
-const dataStream = require('../lib/data/Yelp')(config.BASE_URL, config.API_KEY);
 const config = require('../configs/site')
+const yelpConfig = require('../configs/yelp')
+const Yelp = require('../lib/data/Yelp')
+const dataStream = new Yelp(yelpConfig.BASE_URL, yelpConfig.API_KEY);
 
 exports.search = (req, resp) => {
     model.search(dataStream, config, (res) => {
