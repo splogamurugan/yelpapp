@@ -1,33 +1,34 @@
-const data = require('../lib/Yelp');
+const doesConsist = (obj, key) => {
+  return (typeof obj == 'object' 
+    && key in obj 
+    && Array.isArray(obj[key])
+  );
+}
 
-exports.search = (cb) => {
+exports.search = (data, config, cb) => {
   data.get(
       'search', 
-      {
-          "term": "Ice cream",
-          "location": "Alpharetta"
-      },
-      (data) => {
-          if (data.businesses && Array.isArray(data.businesses)) {
-              cb({"records": data.businesses.slice(0, 5)})
+      config.API_PARAM,
+      (res) => {
+          if (doesConsist(res, 'businesses')) {
+              cb({"records": res.businesses.slice(0, config.API_RESULT_COUNT)})
           } else {
-              cb({"error": "An internal server error occured"})
+              cb({"error": "An internal server error occured while fetching shops!"})
           }
       }
   );
 }
 
-exports.review = (id, cb) => {
+exports.review = (data, id, cb) => {
   let endpoint = `${id}/reviews`;
   data.get(
       endpoint, 
       {},
-      (data) => {
-          console.log(data)
-          if (data.reviews && Array.isArray(data.reviews)) {
-              cb({"user": data.reviews[0].user, "text": data.reviews[0].text})
+      (res) => {
+          if (doesConsist(res, 'reviews')) {
+              cb({"user": res.reviews[0].user, "text": res.reviews[0].text})
           } else {
-              cb({"error": "An internal server error occured"})
+              cb({"error": "An internal server error occured while fetching reviews"})
           }
       }
   );

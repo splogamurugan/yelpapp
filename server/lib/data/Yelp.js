@@ -1,5 +1,4 @@
 const axios = require("axios");
-const config = require('../configs/yelp')
 
 class Yelp {
     
@@ -24,4 +23,4 @@ class Yelp {
 
 }
 
-module.exports = new Yelp(config.BASE_URL, config.API_KEY);
+module.exports =  Yelp;
